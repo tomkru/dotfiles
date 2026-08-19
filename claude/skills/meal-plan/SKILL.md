@@ -6,6 +6,7 @@ description: "Generate Tomas's weekly meal plan and email it to him via Gmail. T
 ## Config (edit here, nowhere else)
 
 - Recipient: the user's own Gmail address (look it up from the Gmail connector profile; never guess)
+- Language: write the whole plan in English. Food/product names bilingual — English first, Dutch shelf name in parentheses: e.g. quark (kwark), chicken breast (kipfilet), wholegrain bread (volkorenbrood).
 - Daily targets, rest-day baseline: 2422 kcal · 158g protein · 269g carbs · 70g fat · 30g fiber
 - Activity: yoga 2-3x/week. Power/hot/sculpt days: add ~200 kcal, mostly carbs. Yin days: baseline.
 - Restrictions: none — eats everything
