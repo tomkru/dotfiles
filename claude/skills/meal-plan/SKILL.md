@@ -7,11 +7,12 @@ description: "Generate Tomas's weekly meal plan and email it to him via Gmail. T
 
 - Recipient: the user's own Gmail address (look it up from the Gmail connector profile; never guess)
 - Language: write the whole plan in English. Food/product names bilingual — English first, Dutch shelf name in parentheses: e.g. quark (kwark), chicken breast (kipfilet), wholegrain bread (volkorenbrood).
-- Body weight: ~90 kg (self-reported 2026-08-19) → protein target ≈ 1.75 g/kg, in the optimal 1.6–2.2 range; targets imply a moderate (~300–500 kcal) cut
+- Body: 185 cm, ~90 kg (self-reported 2026-08-19) → protein target ≈ 1.75 g/kg, in the optimal 1.6–2.2 range. Mostly lean, only some fat to trim — the targets' mild (~300–500 kcal) deficit is fine for now; suggest moving to ~2700 kcal maintenance once he's happy with leanness, to prioritize muscle gain.
+- Training background: former professional track & field athlete (sprints, long jump, shot put) — NOT a beginner. Currently active, retains strength base and motor patterns; expect fast strength regains (muscle memory) but ramp tendon-heavy/explosive volume gradually after time away.
 - Daily targets, rest-day baseline: 2422 kcal · 158g protein · 269g carbs · 70g fat · 30g fiber
 - If a personal fact needed for the plan is missing (weight, injury, schedule), ask in interactive runs instead of guessing; on unattended runs use this config as-is
 - Activity: yoga 2-3x/week. Power/hot/sculpt days: add ~200 kcal, mostly carbs. Yin days: baseline.
-- Goal: build muscle (recomposition). Calisthenics 3x/week: full-body A/B sessions, beginner progressions, minimal equipment (floor; pull-up bar optional), ≥1 rest day between strength sessions, slotted around yoga classes. Calisthenics days count as intensive: same +200 kcal add-on, preferably part protein (e.g. skyr + banana).
+- Goal: build muscle. Calisthenics 3x/week: full-body A/B sessions at intermediate+ level (full/decline/archer push-ups, pull-ups when a bar is available, Bulgarian split squats, dips, pike-to-handstand work — never knee push-ups or other true-beginner regressions), plus explosive/plyometric elements that fit his sprint-jump background (jump squats, broad jumps, optional hill sprints as leg work). Minimal equipment: floor, pull-up bar strongly recommended, loaded backpack as progression. ≥1 rest day between strength sessions, slotted around yoga classes. Calisthenics days count as intensive: same +200 kcal add-on, preferably part protein (e.g. skyr + banana).
 - Restrictions: none — eats everything
 - Cooking level: basic, learning. Include 2-3 "stretch" recipes per week with detailed technique steps.
 - Style: mix — one Sunday batch-prep session, optional Wednesday mini-session, rest cooked fresh
