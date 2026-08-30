@@ -17,19 +17,27 @@ description: "Generate Tomas's weekly meal plan and email it to him via Gmail. T
 - Cooking level: basic, learning. Include 2-3 "stretch" recipes per week with detailed technique steps.
 - Style: mix — one Sunday batch-prep session, optional Wednesday mini-session, rest cooked fresh
 - Shops (Netherlands): Albert Heijn, Jumbo, Lidl, Turkish grocer/toko for produce, spices, bulk
+- Prices: real shelf prices only, from `prices.py` in this skill's directory (Checkjebon open dataset: AH, Jumbo, Lidl, refreshed daily). Never invent or "roughly estimate" a price for anything the script can find.
 
 ## Workflow
 
 1. Compute the upcoming Monday's date. The plan covers Monday–Sunday of that week.
 2. Generate the full plan (structure below). Vary cuisines week to week — use the week's date as a variety seed so consecutive weeks don't repeat. Reuse ingredients across recipes to keep the shopping list tight. Use products actually stocked in Dutch supermarkets (kwark, skyr, kipfilet, volkoren, etc.).
-3. Send it as a single HTML email via the Gmail connector. Subject: `Meal plan — week of {YYYY-MM-DD}`. Body: inline-styled HTML (h2/h3, tables, lists) — no markdown.
-4. Interactive session: confirm sent and summarize the week in 2-3 lines. Unattended scheduled run: just send, no confirmation needed.
-5. If Gmail is not connected, figure out different notification system 
+3. Ground the shopping list in real prices:
+   a. Sum, per ingredient, the total quantity the week's recipes and snacks use. Write `queries.json`: one entry per shopping-list item — `item`, `q` (short Dutch search stem, singular: "kipfilet", "skyr naturel", "rijstwafel"; alternatives separated by `|`), `need` (that total, in g / ml / stuks), optional `exclude` words. Include toko items too — the script may find them cheaper at Lidl.
+   b. Run `python3 <skill dir>/prices.py queries.json > prices.txt` (Bash, timeout 120 s) and read `prices.txt` fully.
+   c. Per item, pick the product that actually matches the plan — plain kipfilet, not schnitzel or a ready meal; the pack size closest to `need`. The first line per shop is the cheapest per unit, not automatically the right product. Put the item at whichever configured shop is cheapest for that product; keep the toko for produce, herbs, spices and bulk.
+   d. Write each line as `English name (Dutch shelf name), product as listed (size) × packs — €cost`, e.g. `Chicken thigh fillet (kipdijfilet), Kipdijfilet grootverpakking (800 g) × 1 — €9.19`. Per-shop subtotals and the weekly total are sums of these numbers.
+   e. Anything the script cannot find (toko produce, herbs, bread, spices) is tagged `~ est.` and summed separately: `Weekly total: €X verified + ~€Y estimated`. Under the total, one line: `Prices: Checkjebon open dataset (AH/Jumbo/Lidl), updated <date from the script's first line>; regular shelf prices, promotions not included.`
+   f. If the script fails, retry once. If it still fails, the shopping list starts with `⚠ Prices not verified this week (price lookup failed)` and carries no euro amounts at all — never fall back to guessed prices.
+4. Send it as a single HTML email via the Gmail connector. Subject: `Meal plan — week of {YYYY-MM-DD}`. Body: inline-styled HTML (h2/h3, tables, lists) — no markdown.
+5. Interactive session: confirm sent and summarize the week in 2-3 lines. Unattended scheduled run: just send, no confirmation needed.
+6. If Gmail is not connected, figure out different notification system 
 
 ## Plan structure (all six sections, every time)
 
 1. **Week overview** — table: 7 days × (breakfast / lunch / dinner / snack) + per-day kcal & protein column. Each day within 5% of targets.
-2. **Shopping list** — grouped by shop, items placed where cheapest/best in NL, with quantities and rough EUR prices, plus a weekly total estimate.
+2. **Shopping list** — grouped by shop, every item with the real product (name as listed, pack size, number of packs) and its price from `prices.py`; per-shop subtotals; weekly total split into verified vs estimated (workflow step 3).
 3. **Prep schedule** — Sunday batch session and optional Wednesday mini-session: exactly what to cook/portion, storage instructions, what stays fresh-cooked on the day.
 4. **Cookbook** — every recipe used that week: ingredients in grams, numbered steps, time. Mark the stretch recipes and explain their techniques in extra detail.
 5. **Macro check** — table: per-day totals (kcal/P/C/F/fiber) vs target.
