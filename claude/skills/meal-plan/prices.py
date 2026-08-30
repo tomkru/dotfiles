@@ -47,7 +47,8 @@ def dataset_date():
     try:
         return json.loads(fetch(META_URL, 15))[0]["commit"]["committer"]["date"][:10]
     except Exception:
-        return "unknown"
+        # GitHub API unreachable/rate-limited: the dataset refreshes daily, so the fetch date is as good
+        return "fetched " + time.strftime("%Y-%m-%d", time.gmtime(os.path.getmtime(CACHE)))
 
 
 UNIT_RE = re.compile(r"(?:ca\.?\s*)?(\d+(?:[.,]\d+)?)\s*(kg|kilo|g|gr|gram|l|liter|litre|ml|cl|stuks|stuk|st|pcs)\b", re.I)
